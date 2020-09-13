@@ -1,0 +1,11 @@
+[info]
+title=Display numbers
+desc=CudaText plugin that shows a number in 10, 16, 2 and 8 numeral systems
+type=cudatext-plugin
+subdir=cuda_display_nums
+homepage=https://github.com/nia40m/cuda-display-nums
+
+[item1]
+section=events
+events=on_caret,on_scroll,on_tab_change
+
