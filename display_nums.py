@@ -88,12 +88,28 @@ class Command:
         pos_color = ed_self.get_prop(PROP_COLOR, value="EdGutterFont")
         # link_color = ed_self.get_prop(PROP_COLOR, value="EdLinks")
 
+        # editor start x and y coordinations
+        x, y, _, _ = ed_self.get_prop(PROP_COORDS)
+        # text part x and y coordinations
+        x_t, y_t, _, _ = ed_self.get_prop(PROP_RECT_TEXT)
+        # current caret position
+        x_1, y_p, x_2, _ = ed_self.get_carets()[0]
+        # get the left position of selection
+        x_p = max(x_1, x_2)
+        # character size
+        w_c, h_c = ed_self.get_prop(PROP_CELL_SIZE)
+        # calculation of position
+        x = x + x_t + x_p*w_c
+        y = y + y_t + (y_p + 1)*h_c
+
         dlg_proc(self.dlg_id, DLG_PROP_SET, prop={
             'border':DBORDER_NONE,
             'topmost':True,
             'on_act':my_on_show,
             'autosize': True,
             'color': bg_color,
+            'x': x,
+            'y': y
         })
 
         dlg_proc(self.dlg_id, DLG_CTL_DELETE_ALL)
