@@ -81,24 +81,34 @@ class Command:
             self.hide_dlg()
             return
 
+        # font name, size and color from current theme
+        f_name, f_size = ed_self.get_prop(PROP_FONT)
+        text_color = ed_self.get_prop(PROP_COLOR, value="EdTextFont")
+        bg_color = ed_self.get_prop(PROP_COLOR, value="EdTextBg")
+        pos_color = ed_self.get_prop(PROP_COLOR, value="EdGutterFont")
+        # link_color = ed_self.get_prop(PROP_COLOR, value="EdLinks")
+
         dlg_proc(self.dlg_id, DLG_PROP_SET, prop={
             'border':DBORDER_NONE,
             'topmost':True,
             'on_act':my_on_show,
             'autosize': True,
+            'color': bg_color,
         })
 
         dlg_proc(self.dlg_id, DLG_CTL_DELETE_ALL)
 
-
         temp = dlg_proc(self.dlg_id, DLG_CTL_ADD, prop="label")
         dlg_proc(
             self.dlg_id,
             DLG_CTL_PROP_SET,
             index=temp,
             prop={
-                'font_name': "Consolas",
-                'cap': "Hex: " + format_str("{:x}".format(a["number"]), 2)
+                'font_name': f_name,
+                'font_size': f_size,
+                'font_color': text_color,
+                'sp_r': 5,
+                'cap': "Hex: " + format_str("{:x}".format(a["number"]), 2),
             }
         )
 
@@ -114,9 +124,12 @@ class Command:
             DLG_CTL_PROP_SET,
             index=temp,
             prop={
-                'font_name': "Consolas",
+                'font_name': f_name,
+                'font_size': f_size,
+                'font_color': text_color,
+                'sp_r': 5,
                 'y': ddd["y"] + ddd["h"],
-                'cap': "Dec: " + format_str("{}".format(a["number"]), 3, ",")
+                'cap': "Dec: " + format_str("{}".format(a["number"]), 3, ","),
             }
         )
 
@@ -132,7 +145,10 @@ class Command:
             DLG_CTL_PROP_SET,
             index=temp,
             prop={
-                'font_name': "Consolas",
+                'font_name': f_name,
+                'font_size': f_size,
+                'font_color': text_color,
+                'sp_r': 5,
                 'y': ddd["y"] + ddd["h"],
                 'cap': "Oct: " + format_str("{:o}".format(a["number"]), 3)
             }
@@ -152,7 +168,10 @@ class Command:
             DLG_CTL_PROP_SET,
             index=temp,
             prop={
-                'font_name': "Consolas",
+                'font_name': f_name,
+                'font_size': f_size,
+                'font_color': text_color,
+                'sp_r': 5,
                 'y': ddd["y"] + ddd["h"],
                 'cap': "Bin: " + format_str(
                         format_str(
@@ -177,8 +196,11 @@ class Command:
             DLG_CTL_PROP_SET,
             index=temp,
             prop={
-                'font_name': "Consolas",
-                'font_color': 0x33CCCC,
+                'font_name': f_name,
+                'font_size': f_size,
+                'font_color': pos_color,
+                'sp_l': 5,
+                'sp_r': 5,
                 'y': ddd["y"] + ddd["h"],
                 'cap': " "*4 + get_bits_positions(curr_bits_in_word)
             }
